@@ -61,7 +61,7 @@ See `skills/handoff/SKILL.md`. Its flow:
    with expected results. Parallel work names independent workstreams (files owned, steps,
    own acceptance command, plus a final integration step) or says `None — do it
    sequentially.`; the executor prompt tells dsh to delegate listed workstreams with its
-   agent-team tools. Constraints always forbid commit/push/branch switches and edits
+   team and subagent tools. Constraints always forbid commit/push/branch switches and edits
    outside Files to touch. Tool-dependent Acceptance commands are then tried on a small
    example in a temporary directory outside the repo; a command that fails is fixed in the
    plan, and one that cannot be tried is reported as unchecked.
@@ -98,15 +98,17 @@ Changes made:
 "bundles": [
   "@deepseek-ai/dsh-base",
   "@deepseek-ai/dsh-headless",
-  "@deepseek-ai/dsh-experimental-agent-team-profile",
   "dsh-brave-search"
 ]
 ```
 
-- Agent Teams is referenced by name only — it resolves to the copy shipped inside dsh.
-  **Do not** `dsh plugin add` it: that installs a stale npm version (`0.1.5-alpha.2` vs the
-  shipped `0.2.1-rc.5`). It replaces the `subagent` tools with `spawn_teammate`,
-  `team_task_*`, `wait_agent`, etc.
+- Agent Teams ships inside `dsh-base` from `0.2.2-rc.2` onward. The separate
+  `@deepseek-ai/dsh-experimental-agent-team-profile` bundle was removed in that release and
+  no longer resolves, so **do not** add it. The packages it used to patch (`agent-team`,
+  `tool-agent-team`) now live in `packages/team`, and teams run on the unified named
+  subagent tools — `spawn_teammate` and the team-scoped `list_agents` / `send_message` /
+  `interrupt_agent` no longer exist. There is nothing to enable: the headless profile
+  inherits teams from `dsh-base`.
 - `dsh-brave-search` is installed from `github:stansz/dsh-brave-search` via
   `dsh plugin --profile headless add github:stansz/dsh-brave-search` (same source as the
   web profile).

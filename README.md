@@ -66,7 +66,7 @@ Each project gets a `.handoff/` folder. `plan.md` is meant to be committed. `rep
 
 ## Configuring the executor
 
-The skill works with the default headless profile. Section C of [dsh-handoff-bootstrap.md](dsh-handoff-bootstrap.md) shows how to add agent teams and Brave search, and how to set the reasoning effort, in `~/.dsh/profiles/headless/`.
+The skill works with the default headless profile. Section C of [dsh-handoff-bootstrap.md](dsh-handoff-bootstrap.md) shows how to set the reasoning effort and add Brave search in `~/.dsh/profiles/headless/`. Agent teams ship inside `dsh-base`; no extra bundle is needed.
 
 By default the headless sandbox allows writes inside the project and network access. It blocks writes outside the project, and approval requests are denied automatically because nobody is there to answer them. `dsh` may work around this with files such as a project-local `.npm-cache/`, which will show up in your diff.
 
